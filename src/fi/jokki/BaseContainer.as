@@ -16,6 +16,7 @@ package fi.jokki {
 		private const LAYOUT_TYPE_COUNT:int = 2;
 		private const ALIGNMENT_COUNT:int = 3;
 		private const LAYOUT_MODE_COUNT:int = 3;
+		private const SCALE_MODE_COUNT:int = 2;
 
 		protected var children:Vector.<BaseContainer>;
 
@@ -47,7 +48,7 @@ package fi.jokki {
 					for (i = 0; i < length; i++) {
 						currentItem = children[i];
 						if (i != 0) {
-							prevItem = children[i-1];
+							prevItem = children[i - 1];
 							children[i].x = prevItem.x + prevItem.width + prevItem.marginRight + currentItem.marginLeft;
 						} else {
 							currentItem.x = currentItem.marginLeft;
@@ -69,7 +70,7 @@ package fi.jokki {
 					for (i = 0; i < length; i++) {
 						currentItem = children[i];
 						if (i != 0) {
-							prevItem = children[i-1];
+							prevItem = children[i - 1];
 							children[i].y = prevItem.y + prevItem.height + prevItem.marginBottom + currentItem.marginTop;
 						} else {
 							currentItem.y = currentItem.marginTop;
@@ -86,6 +87,14 @@ package fi.jokki {
 						}
 					}
 					break;
+				//this case is possible only when layoutType == RELATIVE
+				//other cases drop out on begin of method
+				case LayoutMode.OVERLAY:
+					for (i = 0; i < length; i++) {
+						currentItem = children[i];
+						currentItem.x = this.width * currentItem.x / 100;
+						currentItem.y = this.height * currentItem.y / 100;
+					}
 			}
 
 
@@ -133,6 +142,37 @@ package fi.jokki {
 			return super.removeChild(child);
 		}
 
+		override public function set width(value:Number):void {
+			super.width = value;
+			this.dispatchEvent(new ContainerEvent(ContainerEvent.WIDTH_CHANGED));
+		}
+
+		override public function set height(value:Number):void {
+			super.height = value;
+			this.dispatchEvent(new ContainerEvent(ContainerEvent.HEIGHT_CHANGED));
+		}
+
+		override public function set x(value:Number):void {
+			if (_layoutType == LayoutType.RELATIVE_LAYOUT) {
+				if (value > 100) {
+					value = 100;
+				} else if (value < 0) {
+					value = 0;
+				}
+			}
+			super.x = value;
+		}
+
+		override public function set y(value:Number):void {
+			if (_layoutType == LayoutType.RELATIVE_LAYOUT) {
+				if (value > 100) {
+					value = 100;
+				} else if (value < 0) {
+					value = 0;
+				}
+			}
+			super.y = value;
+		}
 
 		//PROPERTIES
 

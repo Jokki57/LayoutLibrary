@@ -7,7 +7,8 @@ package fi.jokki.constants {
 	import flash.events.Event;
 
 	public class ContainerEvent extends Event {
-		public static const RESIZE:String = "resize";
+		public static const WIDTH_CHANGED:String = "widthChanged";
+		public static const HEIGHT_CHANGED:String = "heightChanged";
 		public static const LAYOUT_TYPE_CHANGED:String = "layoutTypeChanged";
 		public static const LAYOUT_MODE_CHANGED:String = "layoutModeChanged";
 		public static const HORIZONTAL_ALIGN_CHANGED:String = "horizontalAlignChanged";

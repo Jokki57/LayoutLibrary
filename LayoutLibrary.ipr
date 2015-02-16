@@ -20,9 +20,7 @@
       </profile>
     </annotationProcessing>
   </component>
-  <component name="CopyrightManager" default="">
-    <module2copyright />
-  </component>
+  <component name="CopyrightManager" default="" />
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
@@ -278,4 +276,3 @@
     <mapping directory="" vcs="" />
   </component>
 </project>
-
